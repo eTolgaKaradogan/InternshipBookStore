@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_01_AppCore</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Records\" />
+    <None Remove="Records\Bases\" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Business\" />
+    <None Remove="Business\Models\" />
+    <None Remove="Business\Models\Ordering\" />
+    <None Remove="Business\Models\Paging\" />
+    <None Remove="Business\Models\Results\" />
+    <None Remove="Business\Models\Results\Bases\" />
+    <None Remove="DataAccess\" />
+    <None Remove="DataAccess\Bases\" />
+    <None Remove="Business\Services\" />
+    <None Remove="Business\Services\Bases\" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Microsoft.Extensions.Configuration.Binder" />
+    <None Remove="Business\Utils\" />
+    <None Remove="Business\Validations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Records\" />
+    <Folder Include="Records\Bases\" />
+    <Folder Include="Business\" />
+    <Folder Include="Business\Models\" />
+    <Folder Include="Business\Models\Ordering\" />
+    <Folder Include="Business\Models\Paging\" />
+    <Folder Include="Business\Models\Results\" />
+    <Folder Include="Business\Models\Results\Bases\" />
+    <Folder Include="DataAccess\" />
+    <Folder Include="DataAccess\Bases\" />
+    <Folder Include="Business\Services\" />
+    <Folder Include="Business\Services\Bases\" />
+    <Folder Include="Business\Utils\" />
+    <Folder Include="Business\Validations\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+  </ItemGroup>
+</Project>
