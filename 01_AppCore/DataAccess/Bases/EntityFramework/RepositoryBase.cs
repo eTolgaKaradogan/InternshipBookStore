@@ -19,7 +19,6 @@ namespace _01_AppCore.Bases.EntityFramework
         {
             try
             {
-                entity.Guid = Guid.NewGuid().ToString();
                 _db.Set<TEntity>().Add(entity);
                 if (save)
                     Save();
@@ -49,19 +48,6 @@ namespace _01_AppCore.Bases.EntityFramework
             try
             {
                 var entity = EntityQuery(e => e.Id == id).SingleOrDefault();
-                Delete(entity, save);
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-        }
-
-        public virtual void DeleteEntity(string guid, bool save = true)
-        {
-            try
-            {
-                var entity = EntityQuery(e => e.Guid == guid).SingleOrDefault();
                 Delete(entity, save);
             }
             catch (Exception exc)

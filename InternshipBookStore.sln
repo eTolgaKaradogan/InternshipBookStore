@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_AppCore", "01_AppCore\01
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03_DataAccess", "03_DataAccess\03_DataAccess.csproj", "{0854FE76-2B10-4436-99CE-6F58BD9C937C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04_Business", "04_Business\04_Business.csproj", "{EAF976A1-660F-4DF8-B308-620B4D5B840B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05_MvcWebUI", "05_MvcWebUI\05_MvcWebUI.csproj", "{41B67A5F-8D0C-4D4D-A23A-1923207CCB63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{0854FE76-2B10-4436-99CE-6F58BD9C937C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0854FE76-2B10-4436-99CE-6F58BD9C937C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0854FE76-2B10-4436-99CE-6F58BD9C937C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF976A1-660F-4DF8-B308-620B4D5B840B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF976A1-660F-4DF8-B308-620B4D5B840B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF976A1-660F-4DF8-B308-620B4D5B840B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF976A1-660F-4DF8-B308-620B4D5B840B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41B67A5F-8D0C-4D4D-A23A-1923207CCB63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41B67A5F-8D0C-4D4D-A23A-1923207CCB63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41B67A5F-8D0C-4D4D-A23A-1923207CCB63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41B67A5F-8D0C-4D4D-A23A-1923207CCB63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

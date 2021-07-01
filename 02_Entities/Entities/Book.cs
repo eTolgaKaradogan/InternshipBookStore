@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using _01_AppCore.Records.Bases;
 
 namespace _02_Entities.Entities
@@ -13,7 +14,7 @@ namespace _02_Entities.Entities
         [StringLength(1000)]
         public string Description { get; set; }
 
-        public double UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
 
         public int StockAmount { get; set; }
 
@@ -28,8 +29,9 @@ namespace _02_Entities.Entities
         [StringLength(255)]
         public string ImageFileName { get; set; }
 
-        public bool IsEnable { get; set; }
+        public bool IsEnabled { get; set; }
 
+        [ForeignKey("Category")]
         public int CategoryId { get; set; }
         public Category Category { get; set; }
     }

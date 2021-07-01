@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>_04_Business</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\01_AppCore\01_AppCore.csproj" />
+    <ProjectReference Include="..\02_Entities\02_Entities.csproj" />
+    <ProjectReference Include="..\03_DataAccess\03_DataAccess.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Enums\" />
+    <None Remove="Models\" />
+    <None Remove="Models\Filters\" />
+    <None Remove="Models\Reports\" />
+    <None Remove="Services\" />
+    <None Remove="Services\Bases\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Models\" />
+    <Folder Include="Models\Filters\" />
+    <Folder Include="Models\Reports\" />
+    <Folder Include="Services\" />
+    <Folder Include="Services\Bases\" />
+  </ItemGroup>
+</Project>
