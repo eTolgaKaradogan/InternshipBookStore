@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _01_AppCore.Business.Utils;
+using _01_AppCore.Business.Utils.Bases;
 using _03_DataAccess.EntityFramework.Contexts;
 using _03_DataAccess.Repositories;
 using _03_DataAccess.Repositories.Bases;
 using _04_Business.Services;
 using _04_Business.Services.Bases;
+using _05_MvcWebUI.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +34,20 @@ namespace _05_MvcWebUI
         {
             services.AddControllersWithViews();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(config =>
+                {
+                    config.LoginPath = "/Accounts/Login";
+                    config.AccessDeniedPath = "/Accounts/AccessDenied";
+                    config.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    config.SlidingExpiration = true;
+                });
+
+            services.AddSession(config =>
+            {
+                config.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
             services.AddScoped<DbContext, Context>();
             services.AddScoped<BookRepositoryBase, BookRepository>();
             services.AddScoped<CategoryRepositoryBase, CategoryRepository>();
@@ -40,6 +58,9 @@ namespace _05_MvcWebUI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IAccountService, AccountService>();
+
+            AppSettingsUtilBase appSettingsUtil = new AppSettingsUtil(Configuration);
+            appSettingsUtil.Bind<AppSettings>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -58,7 +79,10 @@ namespace _05_MvcWebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

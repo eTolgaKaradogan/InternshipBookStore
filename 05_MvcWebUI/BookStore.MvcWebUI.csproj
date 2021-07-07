@@ -10,6 +10,8 @@
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="Views\Account\" />
     <None Remove="Settings\" />
+    <None Remove="Views\Role\" />
+    <None Remove="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
@@ -24,6 +26,8 @@
   <ItemGroup>
     <Folder Include="Views\Account\" />
     <Folder Include="Settings\" />
+    <Folder Include="Views\Role\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\01_AppCore\BookStore.AppCore.csproj">
