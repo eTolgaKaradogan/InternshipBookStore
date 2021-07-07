@@ -1,0 +1,72 @@
+﻿@model _04_Business.Models.UserModel
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>User</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <label asp-for="RoleId" class="col-1"></label>
+                <div class="col-11">
+                    @{
+                        var roles = ViewBag.Roles as SelectList;
+                        if (roles != null && roles.Count() > 0)
+                        {
+                            foreach (var role in roles)
+                            {
+                                if (role.Selected)
+                                {
+                                    <input asp-for="RoleId" type="radio" value="@role.Value" checked />
+                                }
+                                else
+                                {
+                                    <input asp-for="RoleId" type="radio" value="@role.Value" />
+                                }
+                                @:&nbsp;
+                                @role.Text
+                                @:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            }
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="IsBlocked" class="col-1"></label>
+                <div class="col-11">
+                    <input asp-for="IsBlocked" type="checkbox" />
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                &nbsp;&nbsp;&nbsp;
+                <button type="reset" class="btn btn-warning">Reset</button>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index">Back to User List</a>
+            </div>
+        </form>
+    </div>
+</div>
