@@ -1,23 +1,27 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using _01_AppCore.Records.Bases;
 
 namespace _02_Entities.Entities
 {
-    public class ShippingDetails : RecordBase
+    public class ShippingDetails
     {
         [Required]
         [MinLength(3)]
         [MaxLength(50)]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [MinLength(3)]
         [MaxLength(50)]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
 
         [Required]
         [DataType(DataType.EmailAddress)]
+        [DisplayName("E-Mail")]
         public string Email { get; set; }
 
         [Required]
@@ -26,6 +30,7 @@ namespace _02_Entities.Entities
 
         [Required]
         [DataType(DataType.PhoneNumber)]
+        [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
     }
 }

@@ -7,10 +7,6 @@
       "destination": "wwwroot/lib/bootstrap/"
     },
     {
-      "library": "AlertifyJS@1.13.1",
-      "destination": "wwwroot/lib/AlertifyJS/"
-    },
-    {
       "library": "datatables@1.10.21",
       "destination": "wwwroot/lib/datatables/"
     },
@@ -35,8 +31,12 @@
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     },
     {
-      "library": "popper.js@2.9.1",
-      "destination": "wwwroot/lib/popper.js/"
+      "library": "rateYo@2.3.4",
+      "destination": "wwwroot/lib/rateYo/"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/lib/toastr.js/"
     }
   ]
 }

@@ -1,37 +1,9 @@
 ﻿@model IEnumerable<_04_Business.Models.UserModel>
-
-@{
-    ViewData["Title"] = "User List";
-}
-
-<h1>@ViewData["Title"]</h1>
-
-<p>
-    <a asp-action="Create"><i class="fas fa-plus"></i> Create New User</a>
-</p>
-<p class="bg-primary text-white">
-    @{
-        string count;
-        if (Model != null && Model.Count() > 0)
-        {
-            if (Model.Count() == 1)
-            {
-                count = Model.Count() + " user found";
-            }
-            else
-            {
-                count = Model.Count() + " users found";
-            }
-        }
-        else
-        {
-            count = ViewBag.Message.ToString();
-        }
-        @count
-    }
-</p>
-@if (Model != null && Model.Count() > 0)
-{
+<div class="container">
+    <h1 class="text-center">User List</h1>
+    <p class="text-center">
+        <a class="btn btn-outline-danger" asp-action="Create"><i class="fas fa-plus"></i> Create New User</a>
+    </p>
     <table class="table">
         <thead>
             <tr>
@@ -67,11 +39,12 @@
                         @Html.DisplayFor(modelItem => item.IsBlockedText)
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-lg fa-info-circle"></i> Details</a> |
-                        <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-lg fa-pen-square"></i> Edit</a>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-lg fa-info-circle"></i> Details</a> |
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-lg fa-pen-square"></i> Edit</a> |
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i> Delete</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-}
+</div>

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<_04_Business.Models.UserModel>
+
+<form>
+    <div class="col-sm-3 my-1">
+        <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">@@</div>
+            </div>
+            <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
+        </div>
+    </div>
+    <div class="col-auto my-1">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-username=""><i class="fas fa-lg fa-info-circle"></i> Follow</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

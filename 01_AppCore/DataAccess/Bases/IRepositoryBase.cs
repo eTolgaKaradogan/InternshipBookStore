@@ -11,5 +11,7 @@ namespace _01_AppCore.Bases
         void Update(TEntity entity, bool save = true);
         void Delete(TEntity entity, bool save = true);
         int Save();
+
+
     }
 }

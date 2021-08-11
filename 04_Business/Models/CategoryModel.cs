@@ -10,6 +10,7 @@ namespace _04_Business.Models
         [Required(ErrorMessage = "{0} is required!")]
         [MinLength(3, ErrorMessage = "{0} must be minimum {1} characters!")]
         [MaxLength(100, ErrorMessage = "{0} must be maximum {1} characters!")]
+        [DisplayName("Category")]
         public string Name { get; set; }
 
         [DisplayName("Book Count")]

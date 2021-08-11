@@ -3,68 +3,50 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@_05_MvcWebUI.Settings.AppSettings.Title | @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <title>@_05_MvcWebUI.Settings.AppSettings.Title @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/main.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
-        <nav id="sidebar">
-            <div class="sidebar-header div-header">
-                <a class="a-navbar" asp-action="Index" asp-controller="Home"><h5><i class="fas fa-shopping-basket"></i> @_05_MvcWebUI.Settings.AppSettings.Title</h5></a>
-            </div>
-            <ul class="list-unstyled components">
-                <li class="nav-item">
-                    <a href="/Book/Index" class="a-sidebar"><i class="fas fa-clipboard-list"></i> Books</a>
-                </li>
-            </ul>
-            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
-            {
-                <ul class="list-unstyled admin">
-                    <p>Domains</p>
-                    <li class="nav-item">
-                        <a class="a-sidebar" asp-action="Index" asp-controller="Category"><i class="fas fa-bars"></i> Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="a-sidebar" asp-action="Index" asp-controller="User"><i class="fas fa-bars"></i> Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="a-sidebar" asp-action="Index" asp-controller="Role"><i class="fas fa-bars"></i> Roles</a>
-                    </li>
-                </ul>
-            }
-        </nav>
         <div id="content">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="#" id="sidebarCollapse" class="a-navbar" title="Close Menu">
-                            <i class="fas fa-list-alt"></i>
-                            <i id="i-collapse" class="fas fa-chevron-left"></i> Menu
-                        </a>
-                    </li>
-                </ul>
-                <button class="navbar-toggler navbar-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon navbar-span"></span>
-                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                            <a href="/Home/Index" class="a-navbar"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Book/Index" class="a-navbar"><i class="fas fa-shopping-basket"></i> Books</a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
                             {
                                 <a class="a-navbar" asp-action="Index" asp-controller="Cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="a-navbar" asp-action="Dashboard" asp-controller="User"><i class="fas fa-server"></i> Dashboard</a>
                             }
                         </li>
                     </ul>
                     <div class="navbar-text">
                         <ul class="navbar-nav mr-auto">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Watchlist" asp-route-currentUsername="@User.Identity.Name" class="a-navbar"><i class="fas fa-binoculars"></i> My Watchlist</a>
+                                </li>
+                            }
                             @if (!User.Identity.IsAuthenticated)
                             {
                                 <li class="nav-item">
-                                    <a class="a-navbar" asp-action="Register" asp-controller="Account"><i class="far fa-save"></i> Register</a>
+                                    <a class="a-navbar" asp-action="Register" asp-controller="Account"><i class="fas fa-user-plus"></i> Register</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="a-navbar" asp-action="Login" asp-controller="Account"><i class="fas fa-sign-in-alt"></i> Login</a>
@@ -74,8 +56,11 @@
                             {
                                 <li class="nav-item">
                                     <div class="div-navbar">
-                                        <span class="s-navbar"><i class="fas fa-user"></i> @User.Identity.Name</span>
+                                        <a class="s-navbar" asp-action="Index" asp-controller="Account"><i class="fas fa-user"></i> @User.Identity.Name</a>
                                     </div>
+                                </li>
+                                <li>
+                                    <span class="badge notification-count" id="notificationCount" data-toggle="popover" title="Notifications"></span>
                                 </li>
                                 <li class="nav-item">
                                     <a class="a-navbar" asp-action="Logout" asp-controller="Account"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -85,7 +70,7 @@
                     </div>
                 </div>
             </nav>
-            <div class="container">
+            <div>
                 @RenderBody()
             </div>
         </div>
@@ -95,8 +80,10 @@
     <script src="~/lib/popper.js/umd/popper.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/main.js"></script>
+    @await Html.PartialAsync("_notificationPartial")
     @RenderSection("Scripts", required: false)
     <partial name="_ValidationScriptsPartial" />
 </body>

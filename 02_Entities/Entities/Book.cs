@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using _01_AppCore.Records.Bases;
@@ -24,7 +25,7 @@ namespace _02_Entities.Entities
 
         public long Isbn { get; set; }
 
-        public double Rate { get; set; }
+        public List<Review> Reviews { get; set; }
 
         [StringLength(255)]
         public string ImageFileName { get; set; }

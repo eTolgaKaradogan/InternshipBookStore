@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace _05_MvcWebUI.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class RoleController : Controller
+    public class RoleController : BaseController
     {
         private readonly IRoleService _roleService;
 
@@ -40,10 +40,12 @@ namespace _05_MvcWebUI.Controllers
                 var result = _roleService.Add(role);
                 if (result.Status == ResultStatus.Success)
                 {
+                    Notify("Role is created.");
                     return RedirectToAction(nameof(Index));
                 }
                 if (result.Status == ResultStatus.Error)
                 {
+                    Notify("An error occured!");
                     ModelState.AddModelError("", result.Message);
                     return View(role);
                 }
@@ -52,50 +54,23 @@ namespace _05_MvcWebUI.Controllers
             return View(role);
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Delete()
         {
-            if (id == null)
-            {
-                return View("NotFound");
-            }
-            var role = _roleService.Query().SingleOrDefault(r => r.Id == id.Value);
-            if (role == null)
-            {
-                return View("NotFound");
-            }
-            return View(role);
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(RoleModel role)
+        public IActionResult Delete(int id)
         {
-            if (ModelState.IsValid)
+            var result = _roleService.Delete(id);
+            if (result.Status == ResultStatus.Success)
             {
-                var result = _roleService.Update(role);
-                if (result.Status == ResultStatus.Success)
-                {
-                    return RedirectToAction(nameof(Index));
-                }
-
-                if (result.Status == ResultStatus.Error)
-                {
-                    ModelState.AddModelError("", result.Message);
-                    return View(role);
-                }
-
-                throw new Exception(result.Message);
+                Notify("Role is deleted.");
+                return RedirectToAction("Index");
             }
-            return View(role);
-        }
-
-        [HttpPost]
-        public JsonResult Delete(int id)
-        {
-            var deleteResult = _roleService.Delete(id);
-            if (deleteResult.Status == ResultStatus.Exception)
-                deleteResult.Message = "An exception occured while deleting the role!";
-            return Json(deleteResult.Message);
+            Notify("An error occured!");
+            return View(nameof(Index));
         }
 
         [HttpGet]

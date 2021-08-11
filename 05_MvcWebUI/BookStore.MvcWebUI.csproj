@@ -12,22 +12,54 @@
     <None Remove="Settings\" />
     <None Remove="Views\Role\" />
     <None Remove="Views\User\" />
+    <None Remove="Views\Category\" />
+    <None Remove="Views\Book\" />
+    <None Remove="Views\Cart\" />
+    <None Remove="Views\Shared\Components\" />
+    <None Remove="Views\Shared\Components\Category\" />
+    <None Remove="ViewComponents\" />
+    <None Remove="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+    <None Remove="NETCore.MailKit" />
+    <None Remove="MimeKit" />
+    <None Remove="Microsoft.AspNetCore.SignalR.Client" />
+    <None Remove="Microsoft.AspNetCore.SignalR.Core" />
+    <None Remove="Views\Watchlist\" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+    <None Remove="Microsoft.AspNetCore.SignalR" />
+    <None Remove="ClientNotifications" />
+    <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+    <None Remove="Microsoft.AspNetCore.Razor.Runtime" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="NETCore.MailKit" Version="2.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.17" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.17" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Account\" />
     <Folder Include="Settings\" />
     <Folder Include="Views\Role\" />
     <Folder Include="Views\User\" />
+    <Folder Include="Views\Category\" />
+    <Folder Include="Views\Book\" />
+    <Folder Include="wwwroot\files\" />
+    <Folder Include="wwwroot\files\books\" />
+    <Folder Include="Views\Cart\" />
+    <Folder Include="Views\Shared\Components\" />
+    <Folder Include="Views\Shared\Components\Category\" />
+    <Folder Include="ViewComponents\" />
+    <Folder Include="Views\Watchlist\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\01_AppCore\BookStore.AppCore.csproj">
@@ -42,5 +74,9 @@
     <ProjectReference Include="..\04_Business\BookStore.Business.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\files\" />
+    <Content Remove="wwwroot\files\books\" />
   </ItemGroup>
 </Project>

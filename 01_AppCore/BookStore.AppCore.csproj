@@ -11,8 +11,6 @@
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Business\" />
     <None Remove="Business\Models\" />
-    <None Remove="Business\Models\Ordering\" />
-    <None Remove="Business\Models\Paging\" />
     <None Remove="Business\Models\Results\" />
     <None Remove="Business\Models\Results\Bases\" />
     <None Remove="DataAccess\" />
@@ -29,8 +27,6 @@
     <Folder Include="Records\Bases\" />
     <Folder Include="Business\" />
     <Folder Include="Business\Models\" />
-    <Folder Include="Business\Models\Ordering\" />
-    <Folder Include="Business\Models\Paging\" />
     <Folder Include="Business\Models\Results\" />
     <Folder Include="Business\Models\Results\Bases\" />
     <Folder Include="DataAccess\" />
@@ -41,7 +37,7 @@
     <Folder Include="Business\Validations\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
   </ItemGroup>

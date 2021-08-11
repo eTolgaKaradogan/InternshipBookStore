@@ -5,11 +5,11 @@ namespace _04_Business.Models
 {
     public class CartGroupByModel
     {
-        public int ProductId { get; set; }
+        public int BookId { get; set; }
         public int UserId { get; set; }
 
-        [DisplayName("Product Name")]
-        public string ProductName { get; set; }
+        [DisplayName("Book Name")]
+        public string BookName { get; set; }
 
         [DisplayName("Total Unit Price")]
         public string TotalUnitPriceText { get; set; }

@@ -10,7 +10,7 @@ namespace _04_Business.Models
     {
         [Required(ErrorMessage = "{0} is required!")]
         [StringLength(50, ErrorMessage = "{0} must be maximum {1} characters!")]
-        [DisplayName("Role")]
+        [DisplayName("Roles")]
         public string Name { get; set; }
 
         public List<UserModel> Users { get; set; }

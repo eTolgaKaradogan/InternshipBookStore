@@ -28,7 +28,7 @@
 
 .a-navbar {
     color: #ffffff;
-    background-color: #6d7fcc;
+    background-color: #343a40 !important;
     text-decoration: none;
     transition: all 0.3s;
     font-size: 1.1em;
@@ -36,7 +36,7 @@
 
     .a-navbar:hover {
         color: #ffffff;
-        background-color: #6d7fcc;
+        background-color: #343a40 !important;
         text-decoration: underline;
         transition: all 0.3s;
         font-size: 1.1em;
@@ -44,7 +44,7 @@
 
     .a-navbar:focus {
         color: #ffffff;
-        background-color: #6d7fcc;
+        background-color: #343a40 !important;
         text-decoration: none;
         transition: all 0.3s;
         font-size: 1.1em;
@@ -52,14 +52,14 @@
 
     .a-navbar:visited {
         color: #ffffff;
-        background-color: #6d7fcc;
+        background-color: #343a40 !important;
         text-decoration: none;
         transition: all 0.3s;
         font-size: 1.1em;
     }
 
 .navbar {
-    background: #6d7fcc !important;
+    background: #343a40 !important;
     border: none;
     border-radius: 0;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -67,7 +67,7 @@
 }
 
     .navbar li {
-        padding: 10px 10px;
+        padding: 10px 18px;
     }
 
 .wrapper {
@@ -79,7 +79,7 @@
 #sidebar {
     min-width: 150px;
     max-width: 150px;
-    background: #7386D5;
+    background: #343a40 !important;
     color: #fff;
     transition: all 0.3s;
 }
@@ -90,7 +90,7 @@
 
     #sidebar .sidebar-header {
         padding: 18px;
-        background: #6d7fcc;
+        background: #343a40 !important;
         height: 75px;
     }
 
@@ -113,7 +113,7 @@
 
         #sidebar ul li a:hover {
             color: #fff;
-            background: #7386D5;
+            background: #343a40 !important;
         }
 
     #sidebar ul li.active > a,
@@ -181,7 +181,8 @@ ul ul a {
 }
 
 ul.admin {
-    padding-top: 5px;
+    padding-top: 15px;
+    padding-bottom: 25px;
     border-bottom: 1px solid #47748b;
 }
 
@@ -194,10 +195,9 @@ ul.admin {
     }
 
 #navbarSupportedContent {
-    background-color: #6d7fcc !important;
-    border-style: solid !important;
+    background-color: #343a40 !important;
     border-width: 3px !important;
-    border-color: #6d7fcc !important;
+    border-color: #343a40 !important;
 }
 
 .row-padding {
@@ -229,3 +229,7 @@ ul.admin {
     .ul-categories li.active a {
         color: red;
     }
+
+.hide {
+    display: none;
+}
