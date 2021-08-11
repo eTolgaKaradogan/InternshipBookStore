@@ -25,7 +25,4 @@
     <ProjectReference Include="..\02_Entities\BookStore.Entities.csproj" />
     <ProjectReference Include="..\03_DataAccess\BookStore.DataAccess.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0" />
-  </ItemGroup>
 </Project>
