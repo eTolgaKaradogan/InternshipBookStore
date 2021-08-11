@@ -1,35 +1,21 @@
 ﻿@model _04_Business.Models.UserLoginModel
 
-@{
-    ViewData["Title"] = "Login";
-}
-
-<h1>Login</h1>
-
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Login">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="All" class="text-danger"></div>
-            @if (ViewBag.Message != null)
-            {
-                <p class="bg-danger text-white">@ViewBag.Message</p>
-            }
-            <div class="form-group">
-                <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" type="password" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-success" />
-            </div>
-        </form>
+<div class="row justify-content-center xs-div" style="margin-right: -125px;">
+    <form class="form-signin signinform" asp-action="Login">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label asp-for="UserName" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" asp-for="UserName" class="form-control" placeholder="Username" required="" autofocus="">
+        <label asp-for="Password" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" asp-for="Password" class="form-control" placeholder="Password" required="">
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <br />
+    </form>
+    <div class="forgotpassword-button" style="position: relative; top: 382px; right: 370px;">
+        <a class="btn btn-lg btn-secondary btn-block" asp-controller="Account" method="GET" asp-action="ForgotPassword">Forgot Password</a>
     </div>
 </div>

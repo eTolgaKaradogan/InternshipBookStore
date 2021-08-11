@@ -1,0 +1,35 @@
+﻿@model _04_Business.Models.UserModel
+
+<div class="container">
+    @if (Model == null)
+    {
+        <h5 class="text-center">There is no user with this username.</h5>
+        <br />
+        <br />
+        <br />
+        <a class="btn btn-primary" asp-action="Index" asp-controller="Watchlist" style="postition:relative; left:620px;"> Back To Watchlist</a>
+    }
+    @if (Model != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.UserName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => model.UserName)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" asp-action="Add" asp-controller="Watchlist" asp-route-username="@Model.UserName" asp-route-currentUsername="@User.Identity.Name"><i class="fas fa-plus"></i> Add To Watchlist</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>

@@ -92,6 +92,12 @@ namespace _04_Business.Services
             }
         }
 
+        public int GetUserId(string username)
+        {
+            var user = Query().FirstOrDefault(u => u.UserName == username);
+            return user.Id;
+        }
+
         public Result<List<UserModel>> GetUsers()
         {
             try
@@ -134,10 +140,6 @@ namespace _04_Business.Services
         {
             try
             {
-                if (_userRepository.EntityQuery().Any(u => u.UserName.ToUpper() == model.UserName.ToUpper().Trim() && u.Id != model.Id))
-                    return new ErrorResult("User with the same user name exists!");
-                if (_userRepository.EntityQuery().Any(u => u.Email.ToUpper() == model.Email.ToUpper().Trim()))
-                    return new ErrorResult("User with the same e-mail exists!");
                 var entity = new User()
                 {
                     Id = model.Id,
@@ -145,7 +147,7 @@ namespace _04_Business.Services
                     UserName = model.UserName.Trim(),
                     Password = model.Password.Trim(),
                     Email = model.Email.Trim(),
-                    RoleId = model.RoleId,
+                    RoleId = model.RoleId
                 };
                 _userRepository.Update(entity);
                 return new SuccessResult();

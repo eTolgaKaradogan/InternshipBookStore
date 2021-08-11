@@ -1,0 +1,82 @@
+﻿@model _04_Business.Models.BookModel
+@{
+    ViewData["Title"] = "Edit Book";
+}
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <h4>Product</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+
+            <form asp-action="Edit" autocomplete="off" enctype="multipart/form-data">
+
+                <input asp-for="Id" type="hidden" />
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AuthorName"></label>
+                    <input asp-for="AuthorName" class="form-control" />
+                    <span asp-validation-for="AuthorName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId"></label>
+                    <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories">
+                        <option value="">-- Select --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" class="form-control"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Isbn"></label>
+                    <input asp-for="Isbn" class="form-control" />
+                    <span asp-validation-for="Isbn" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UnitPriceText"></label>
+                    <input asp-for="UnitPriceText" class="form-control" />
+                    <span asp-validation-for="UnitPriceText" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StockAmount"></label>
+                    <input asp-for="StockAmount" class="form-control" />
+                    <span asp-validation-for="StockAmount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsEnabled"></label>
+                    <input asp-for="IsEnabled" class="form-control" />
+                    <span asp-validation-for="IsEnabled" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Image</label>
+                    <div class="custom-file">
+                        <input type="file" name="image" accept="@_05_MvcWebUI.Settings.AppSettings.AcceptedImageExtensions" id="inputGroupFile02">
+                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-info" />
+                    &nbsp;&nbsp;&nbsp;
+                    @if (Model.ImageFileName != null)
+                    {
+                        <a asp-action="DeleteBookImage" asp-route-id="@Model.Id" class="btn btn-danger">Delete Book Image</a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-outline-danger" asp-action="AdminIndex">Back to Book List</a>
+    </div>
+</div>

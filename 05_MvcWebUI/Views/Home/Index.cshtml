@@ -1,15 +1,41 @@
 ﻿@{
-    ViewData["Title"] = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="text-left">
-    <h1 class="display-4">@_05_MvcWebUI.Settings.AppSettings.Title</h1>
-    @{
-        string userName = "";
-        if (User.Identity.IsAuthenticated)
-        {
-            userName = User.Identity.Name;
-        }
-    }
-    <p>Welcome @userName</p>
-</div>
+
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center my-5">
+                    <h1 class="display-5 fw-bolder text-white mb-2">BookStore</h1>
+                    <p class="lead text-white-50 mb-4">You can find any book you want and create your order! You can review and rate a book, create your own watchlist and getting notifications!</p>
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-outline-danger btn-lg px-4 me-sm-3 home-button" asp-action="Index" asp-controller="Book">Find a Book</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<section class="py-5 border-bottom" id="features">
+    <div class="container px-5 my-5">
+        <div class="row gx-5">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="fas fa-book"></i></div>
+                <h2 class="h4 fw-bolder text-center">Find and Buy</h2>
+                <p class="text-center">You can find any book you want and create an order!</p>
+            </div>
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="fas fa-pencil-alt"></i></div>
+                <h2 class="h4 fw-bolder text-center">Rate The Books</h2>
+                <p class="text-center">You can review and rate books. If you're confused about buying the book, check out the comments!</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="fas fa-binoculars"></i></div>
+                <h2 class="h4 fw-bolder text-center">The Watchlist</h2>
+                <p class="text-center">You can follow other users and get notifications when the users which you follow are review a book or bought a book.</p>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,205 @@
+﻿@model PaginatedList<_04_Business.Models.BookModel>
+
+@{
+    ViewData["Title"] = "";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@_05_MvcWebUI.Settings.AppSettings.Title @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/AlertifyJS/css/alertify.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <style>
+        form {
+            display: inline;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header div-header">
+                <a class="a-navbar"><h5> @_05_MvcWebUI.Settings.AppSettings.Title</h5></a>
+            </div>
+            <div>
+                <ul class="list-unstyled admin">
+                    <p> Search by Book Name, Author Name or ISBN: </p>
+                    <form asp-action="Index" method="get">
+                        <input class="form-control search-input" type="text" name="SearchString" style="position: relative; width: 139px; left: 5px;" value="@ViewData["CurrentFilter"]">
+                        <button class="btn btn-outline-light search-button" value="search" type="submit" style="position: relative; left: 25px; top: 11px;"><i class="fas fa-search"></i></button>
+                    </form>
+                    <form asp-action="Index" method="get">
+                        <button class="btn btn-outline-light reset-button" style="position: relative; left: 33px; top: 11px;"><i class="fas fa-undo"></i></button>
+                    </form>
+                </ul>
+            </div>
+            <ul class="list-group">
+                @await Component.InvokeAsync("Category")
+            </ul>
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" id="sidebarCollapse" class="a-navbar" title="Close Menu">
+                            <i id="i-collapse" class="fas fa-chevron-left"></i> Menu
+                        </a>
+                    </li>
+                </ul>
+                <button class="navbar-toggler navbar-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon navbar-span"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a href="/Home/Index" class="a-navbar"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Book/Index" class="a-navbar"><i class="fas fa-shopping-basket"></i> Books</a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="a-navbar" asp-action="Index" asp-controller="Cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+                            }
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="a-navbar" asp-action="Dashboard" asp-controller="User"><i class="fas fa-server"></i> Dashboard</a>
+                            }
+                        </li>
+                    </ul>
+                    <div class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a asp-action="Index" asp-controller="Watchlist" asp-route-currentUsername="@User.Identity.Name" class="a-navbar"><i class="fas fa-binoculars"></i> My Watchlist</a>
+                                </li>
+                            }
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Register" asp-controller="Account"><i class="fas fa-user-plus"></i> Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Login" asp-controller="Account"><i class="fas fa-sign-in-alt"></i> Login</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <div class="div-navbar">
+                                        <a class="s-navbar" asp-action="Index" asp-controller="Account" asp-route-username="@User.Identity.Name"><i class="fas fa-user"></i> @User.Identity.Name</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="badge notification-count" id="notificationCount" data-toggle="popover" title="Notifications"></span>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Logout" asp-controller="Account"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                @if (ViewData["ProductsMessage"] != null)
+                {
+                    <p class="bg-success text-white">@ViewData["ProductsMessage"]</p>
+                }
+
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-4" style="padding-top:20px;">
+                            <div class="card" style="width: 18rem;">
+                                @if (!string.IsNullOrEmpty(item.ImageFileName))
+                                {
+                                    <img src="/files/books/@item.ImageFileName" class="card-img-top" alt="...">
+                                }
+                                <div class="card-body text-center">
+                                    <h2>@item.Name</h2>
+                                    <h4>@item.AuthorName</h4>
+                                    <h5>£@item.UnitPriceText</h5>
+                                    <p class="card-text">@item.Description</p>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="btn btn-outline-danger" asp-action="AddToCart" asp-controller="Cart" asp-route-bookId="@item.Id"><i class="fas fa-cart-plus"></i> Add to Cart</a>
+
+                                        <a class="btn btn-outline-danger details-button" asp-action="Details" asp-route-id="@item.Id" asp-route-username="@User.Identity.Name"><i class="fas fa-lg fa-info-circle"></i> Details</a>
+
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            @:&nbsp;&nbsp;
+                                            <a class="btn btn-outline-danger edit-button" asp-action="Edit" asp-route-id="@item.Id" style="position: relative; right: -25px; top: 9px;"><i class="fas fa-lg fa-pen-square"></i> Edit</a>
+                                            @:&nbsp;&nbsp;
+                                            <a class="btn btn-outline-danger delete-button" href="#" onclick="deleteBook(@item.Id);" style="position: relative; bottom: -9px; left: 12px;"><i class="fas fa-lg fa-trash"></i> Delete</a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @{
+                    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.NextPage ? "disabled" : "";
+                }
+                <div class="text-center" style="padding-top: 20px;">
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-danger @prevDisabled">
+                        Previous
+                    </a>
+
+                    <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-danger @nextDisabled">
+                        Next
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/popper.js/umd/popper.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/datatables.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js"></script>
+    @await Html.PartialAsync("_notificationPartial")
+    <partial name="_ValidationScriptsPartial" />
+</body>
+</html>
+<script>$(function () {
+        BindDataTable("books");
+    });
+
+    function deleteBook(id) {
+        alertify.confirm("Warning!",
+            "Are you sure do you want to delete this book?",
+            function () {
+                window.location.href = "/Book/Delete/" + id;
+            },
+            function () {
+                alertify.error("Delete canceled.");
+            }
+        );
+    }</script>

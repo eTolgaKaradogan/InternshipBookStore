@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@_05_MvcWebUI.Settings.AppSettings.Title @ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/main.css" rel="stylesheet" />
+    <script src="~/lib/jquery/jquery.min.js"></script>
+
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a href="/Home/Index" class="a-navbar"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/Book/Index" class="a-navbar"><i class="fas fa-shopping-basket"></i> Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="a-navbar" asp-action="Index" asp-controller="Cart"><i class="fas fa-shopping-cart"></i> Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="a-navbar" asp-action="Dashboard" asp-controller="User"><i class="fas fa-server"></i> Dashboard</a>
+                        </li>
+                    </ul>
+                    <div class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a asp-action="Index" asp-controller="Watchlist" asp-route-currentUsername="@User.Identity.Name" class="a-navbar"><i class="fas fa-binoculars"></i> My Watchlist</a>
+                            </li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Register" asp-controller="Account"><i class="fas fa-user-plus"></i> Register</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Login" asp-controller="Account"><i class="fas fa-sign-in-alt"></i> Login</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <div class="div-navbar">
+                                        <a class="s-navbar" asp-action="Index" asp-controller="Account" asp-route-username="@User.Identity.Name"><i class="fas fa-user"></i> @User.Identity.Name</a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="badge notification-count" id="notificationCount" data-toggle="popover" title="Notifications"></span>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="a-navbar" asp-action="Logout" asp-controller="Account"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                    <h1 class="display-4">Admin Dashboard</h1>
+                    <p class="lead">You can create, edit, delete or check details of the domains here.</p>
+                </div>
+                <div class="card-deck mb-3 text-center style="position: relative;top: 30px;">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Books</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Create</li>
+                                <li>Details</li>
+                                <li>Edit</li>
+                                <li>Delete</li>
+                            </ul>
+                            <a type="button" asp-action="AdminIndex" asp-controller="Book" class="btn btn-lg btn-block btn-primary">Go To Books</a>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Categories</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Create</li>
+                                <li>Details</li>
+                                <li>Edit</li>
+                                <li>Delete</li>
+                            </ul>
+                            <a type="button" asp-action="Index" asp-controller="Category" class="btn btn-lg btn-block btn-primary">Go To Categories</a>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Users</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Create</li>
+                                <li>Details</li>
+                                <li>Edit</li>
+                                <li>Delete</li>
+                            </ul>
+                            <a type="button" asp-action="Index" asp-controller="User" class="btn btn-lg btn-block btn-primary">Go To Users</a>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 font-weight-normal">Roles</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Create</li>
+                                <li>Details</li>
+                                <li>Edit</li>
+                                <li>Delete</li>
+                            </ul>
+                            <a type="button" asp-action="Index" asp-controller="Role" class="btn btn-lg btn-block btn-primary">Go To Roles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/lib/popper.js/umd/popper.min.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/lib/font-awesome/js/all.min.js"></script>
+        <script src="~/lib/toastr.js/toastr.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/main.js"></script>
+        @await Html.PartialAsync("_notificationPartial")
+        <partial name="_ValidationScriptsPartial" />
+    </div>
+</body>
+</html>

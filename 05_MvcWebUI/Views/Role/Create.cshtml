@@ -1,30 +1,28 @@
 ﻿@model _04_Business.Models.RoleModel
 
-@{
-    ViewData["Title"] = "Create Role";
-}
-
-<h1>@ViewData["Title"]</h1>
-
-<h4>Role</h4>
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Create">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-outline-primary" />
-            </div>
-        </form>
+<div class="container">
+    <h1 class="text-center">Create New Role</h1>
+    <br />
+    <br />
+    <br />
+    <div class="row justify-content-center">
+        <div>
+            <form asp-action="Create">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="h4 text-center" asp-for="Name">Role Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <input type="submit" value="Save" class="btn btn-success" style=" position: relative; left: 0px;" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to Role List</a>
+    <div class="row justify-content-center">
+        <a class="btn btn-outline-danger" asp-action="Index">Back to Role List</a>
+    </div>
 </div>

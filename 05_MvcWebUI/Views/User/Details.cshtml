@@ -1,22 +1,10 @@
 ﻿@model _04_Business.Models.UserModel
 
-@{
-    ViewData["Title"] = "User Details";
-}
+<div class="container">
 
-<h1>User Details</h1>
+    <h1 class="text-center">User Details</h1>
 
-@if (ViewData["Message"] != null)
-{
-    <p class="bg-danger text-white">
-        @ViewData["Message"]
-    </p>
-}
-
-@if (Model != null)
-{
     <div>
-        <h4>User</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
@@ -51,12 +39,11 @@
             </dd>
         </dl>
     </div>
-}
 
-<div>
-    @if (Model != null)
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit User</a><br />
-    }
-    <a asp-action="Index">Back to User List</a>
+    <div>
+        <a class="btn btn-outline-danger" asp-action="Edit" asp-route-id="@Model.Id">Edit User</a>
+        <br />
+        <br />
+        <a class="btn btn-outline-danger" asp-action="Index">Back to User List</a>
+    </div>
 </div>

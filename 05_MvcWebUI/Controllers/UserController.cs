@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using _01_AppCore.Business.Models.Results;
+using _03_DataAccess.Repositories;
 using _04_Business.Enums;
 using _04_Business.Models;
 using _04_Business.Services.Bases;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace _05_MvcWebUI.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly IUserService _userService;
         private readonly IRoleService _roleService;
@@ -47,7 +48,6 @@ namespace _05_MvcWebUI.Controllers
             return View(result.Data);
         }
 
-        // GET: Users/Create
         public IActionResult Create()
         {
             ViewData["Roles"] = new SelectList(_roleService.Query().ToList(), "Id", "Name", (int)Roles.Admin);
@@ -63,9 +63,12 @@ namespace _05_MvcWebUI.Controllers
             {
                 var userResult = _userService.Add(user);
                 if (userResult.Status == ResultStatus.Exception)
-                    throw new Exception(userResult.Message);
+                    Notify("An error occured!");
                 if (userResult.Status == ResultStatus.Success)
+                {
+                    Notify("User is created.");
                     return RedirectToAction(nameof(Index));
+                }
                 ModelState.AddModelError("", userResult.Message);
             }
             ViewData["Roles"] = new SelectList(_roleService.Query().ToList(), "Id", "Name", user.RoleId);
@@ -96,15 +99,25 @@ namespace _05_MvcWebUI.Controllers
             {
                 var userResult = _userService.Update(user);
                 if (userResult.Status == ResultStatus.Exception)
-                    throw new Exception(userResult.Message);
+                    Notify("An error occured!");
                 if (userResult.Status == ResultStatus.Success)
+                {
+                    Notify("User is successfully edited.");
                     return RedirectToAction(nameof(Index));
+                }
                 ModelState.AddModelError("", userResult.Message);
             }
             ViewBag.Roles = new SelectList(_roleService.Query().ToList(), "Id", "Name", user.RoleId);
             return View(user);
         }
 
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -112,10 +125,37 @@ namespace _05_MvcWebUI.Controllers
                 return View("NotFound");
             }
 
-            var result = _userService.Delete(id.Value);
-            if (result.Status == ResultStatus.Exception)
-                throw new Exception(result.Message);
+            _userService.Delete(id.Value);
+            Notify("User is deleted.");
             return RedirectToAction(nameof(Index));
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult FollowUser(string searchString, string currentUserName)
+        {
+            ViewData["CurrentSearch"] = searchString;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var followingUser = _userService.Query().SingleOrDefault(b => b.UserName == searchString);
+                if (followingUser == null)
+                {
+                    Notify("The error occured!");
+                    return View(ResultStatus.Error);
+                }
+                var user = _userService.Query().SingleOrDefault(u => u.UserName == currentUserName);
+                user.FollowingUsers = followingUser.UserName;
+                _userService.Update(user);
+                Notify("You have followed {0}.", followingUser.UserName);
+                return RedirectToAction("Index", "Book");
+            }
+
+            return View(ResultStatus.Error);
+        }
+
+        public IActionResult Dashboard()
+        {
+            return View();
         }
     }
 }

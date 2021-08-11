@@ -1,0 +1,87 @@
+﻿@model PaginatedList<_04_Business.Models.BookModel>
+
+<div class="container">
+    <p class="text-center">
+        <a class="btn btn-outline-danger" asp-action="Create"><i class="fas fa-plus"></i> Create New Book</a>
+    </p>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-3">
+            <form asp-action="AdminIndex">
+                <input type="text" class="form-control" id="validationCustom03" placeholder="Book Name, Author Name or ISBN" name="SearchString" value="@ViewData["CurrentFilter"]">
+                <button class="btn btn-primary" type="submit" value="search" style="position:relative; left:452px; bottom:37px;"><i class="fas fa-search"></i></button>
+            </form>
+            <form asp-action="AdminIndex">
+                <button class="btn btn-danger" style="position:relative; left:500px; bottom:75px;"><i class="fas fa-undo"></i></button>
+            </form>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Author Name
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    ISBN
+                </th>
+                <th>
+                    Unit Price
+                </th>
+                <th>
+                    Stock Amount
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AuthorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Isbn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitPriceText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StockAmount)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i> Details</a>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-lg fa-pen-square"></i> Edit</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="fas fa-trash-alt"></i> Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @{
+        var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.NextPage ? "disabled" : "";
+    }
+    <div class="text-center">
+        <a asp-action="AdminIndex" asp-route-pageNumber="@(Model.PageIndex - 1)" class="btn btn-danger @prevDisabled">
+            Previous
+        </a>
+
+        <a asp-action="AdminIndex" asp-route-pageNumber="@(Model.PageIndex + 1)" class="btn btn-danger @nextDisabled">
+            Next
+        </a>
+    </div>
+</div>

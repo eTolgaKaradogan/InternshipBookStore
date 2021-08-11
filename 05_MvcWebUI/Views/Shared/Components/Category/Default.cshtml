@@ -1,0 +1,26 @@
+﻿@model List<_04_Business.Models.CategoryModel>
+
+@if (Model != null && Model.Count > 0)
+{
+    <li class="text-center">
+        <a class="text-light" asp-action="Index" asp-controller="Book">All Categories</a>
+    </li>
+
+    @foreach (var category in Model)
+    {
+        @if (ViewBag.CategoryId != null && Convert.ToInt32(ViewBag.CategoryId) == category.Id)
+        {
+            <li class="active text-center">
+                <a class="text-light" asp-action="Index" asp-controller="Book" asp-route-categoryId="@category.Id">@category.Name</a>
+            </li>
+        }
+        else
+        {
+            <li class="text-center">
+                <a class="text-light" asp-action="Index" asp-controller="Book" asp-route-categoryId="@category.Id">@category.Name</a>
+            </li>
+        }
+    }
+
+    <hr />
+}

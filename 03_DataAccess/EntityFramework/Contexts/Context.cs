@@ -10,6 +10,11 @@ namespace _03_DataAccess.EntityFramework.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Watchlist> Watchlists { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<NotificationUser> NotificationUsers { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,6 +37,22 @@ namespace _03_DataAccess.EntityFramework.Contexts
 
             modelBuilder.Entity<Book>()
                 .HasIndex(product => product.Name);
+
+            modelBuilder.Entity<User>()
+                .HasMany(w => w.Watchlists)
+                .WithOne(w => w.User)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Watchlist>()
+                .HasOne(w => w.User)
+                .WithMany(w => w.Watchlists)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<NotificationUser>()
+                .HasKey(k => new { k.NotificationId, k.UserId });
+
+
         }
     }
 }

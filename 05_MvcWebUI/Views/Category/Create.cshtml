@@ -1,0 +1,27 @@
+﻿@model _04_Business.Models.CategoryModel
+
+
+<h1 class="text-center">Create New Category</h1>
+<br />
+<br />
+<div class="container">
+    <div class="row justify-content-center">
+        @using (Html.BeginForm())
+        {
+            <input asp-for="Id" type="hidden" />
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label class="h4 category-name" asp-for="Name" style="position: relative; left: 37px;">Category Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        }
+    </div>
+    <div class="row justify-content-center">
+        <a class="btn btn-secondary role-back" asp-action="Index" style="position: relative; top: 20px;">Back to Category List</a>
+    </div>
+</div>

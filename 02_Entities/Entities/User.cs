@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using _01_AppCore.Records.Bases;
 
@@ -21,8 +22,16 @@ namespace _02_Entities.Entities
 
         public bool IsBlocked { get; set; }
 
+        public string PasswordResetCode { get; set; }
+
         public int RoleId { get; set; }
         public Role Role { get; set; }
+
+        public List<Review> Reviews { get; set; }
+
+        public List<Watchlist> Watchlists { get; set; }
+
+        public List<NotificationUser> NotificationUsers { get; set; }
 
     }
 }

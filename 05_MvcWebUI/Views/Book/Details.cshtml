@@ -1,0 +1,143 @@
+﻿@model _05_MvcWebUI.Models.BookDetailsViewModel
+
+<div>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                @if (!string.IsNullOrWhiteSpace(Model.bookModel.ImageFileName))
+                {
+                    <img src="/files/books/@Model.bookModel.ImageFileName" class="img-fluid" />
+                }
+            </div>
+            <div class="col">
+                <dt class="col-md">
+                    @Html.DisplayNameFor(model => model.bookModel.Name)
+                </dt>
+                <dd class="col-md">
+                    @Html.DisplayFor(model => model.bookModel.Name)
+                </dd>
+                <dt class="col-md">
+                    @Html.DisplayNameFor(model => model.bookModel.AuthorName)
+                </dt>
+                <dd class="col-md">
+                    @Html.DisplayFor(model => model.bookModel.AuthorName)
+                </dd>
+                <dt class="col-md">
+                    @Html.DisplayNameFor(model => model.bookModel.Description)
+                </dt>
+                <dd class="col-md">
+                    @Html.DisplayFor(model => model.bookModel.Description)
+                </dd>
+                <dt class="col-md">
+                    @Html.DisplayNameFor(model => model.bookModel.Isbn)
+                </dt>
+                <dd class="col-md">
+                    @Html.DisplayFor(model => model.bookModel.Isbn)
+                </dd>
+                <dt class="col-md">
+                    @Html.DisplayNameFor(model => model.bookModel.UnitPriceText)
+                </dt>
+                <dd class="col-md">
+                    $@Html.DisplayFor(model => model.bookModel.UnitPriceText)
+                </dd>
+                <dt class="col-md">
+                    @Html.DisplayNameFor(model => model.bookModel.Category)
+                </dt>
+                <dd class="col-md">
+                    @Html.DisplayFor(model => model.bookModel.Category.Name)
+                </dd>
+                @if (User.IsInRole("Admin"))
+                {
+                    <dt class="col-md">
+                        @Html.DisplayNameFor(model => model.bookModel.StockAmount)
+                    </dt>
+                    <dd class="col-md">
+                        @Html.DisplayFor(model => model.bookModel.StockAmount)
+                    </dd>
+                    <dt class="col-md">
+                        @Html.DisplayNameFor(model => model.bookModel.IsEnabled)
+                    </dt>
+                    <dd class="col-md">
+                        @Html.DisplayFor(model => model.bookModel.IsEnabled)
+                    </dd>
+                }
+
+                <h3>Add Rating and Review</h3>
+                <form asp-action="SendReview" method="post" asp-route-username="@User.Identity.Name" asp-route-bookId="@Model.bookModel.Id" autocomplete="off" enctype="multipart/form-data">
+                    <div class="row">
+                        <table>
+                            <tr class="col-md">
+                                <td class="col-md">Rating</td>
+                                <td><div id="rateYo"></div></td>
+                                <td><input type="hidden" id="rating" name="rating" /></td>
+                            </tr>
+                            <tr class="col-md">
+                                <td class="col-md">Content</td>
+                                <td class="col-md">@Html.TextAreaFor(model => model.Review.Content)</td>
+                            </tr>
+                            <tr class="col-md">
+                                <td class="col-md">&nbsp;</td>
+                                <td class="col-md">
+                                    <input type="submit" value="Send" />
+                                    @Html.HiddenFor(model => model.Review.BookId)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+                <hr />
+                <div style="width: 683px; height: 540px; overflow: scroll; ">
+                    @{ int i = 1;}
+                    @foreach (var item in Model.bookModel.Reviews)
+                    {
+                        <dt class="col-md text-center">
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </dt>
+                        <dd class="row justify-content-center">
+                            <div class="text-center">
+                                <script>$(function () {
+                                $('#@("rating" + i)').rateYo({
+                                    rating: @Html.DisplayFor(modelItem => item.Rating),
+                                    readOnly: true
+                                });
+                            });</script>
+                                <div id="@("rating" + i)"></div>
+                                <br />
+                                @Html.DisplayFor(modelItem => item.Content)
+                            </div>
+                        </dd>
+                        <hr />
+                        i++;
+
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <a clas="btn btn-outline-danger" asp-action="Edit" asp-route-id="@Model.bookModel.Id">Edit</a> @:|
+    }
+    <a class="btn btn-outline-danger" asp-action="Index">Back to Book List</a>
+</div>
+
+@section Scripts
+{
+    <link href="~/lib/rateYo/jquery.rateyo.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/lib/rateYo/jquery.rateyo.min.js"></script>
+
+    <script>$(function () {
+            $("#rateYo").rateYo({
+                rating: 0,
+                numStarts: 5,
+                maxValue: 5,
+                halfStar: true,
+                onChange: function (rating, rateYoInstance) {
+                    $('#rating').val(rating);
+                }
+            })
+        })</script>
+}

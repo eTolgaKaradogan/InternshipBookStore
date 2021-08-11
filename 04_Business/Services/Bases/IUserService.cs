@@ -12,5 +12,6 @@ namespace _04_Business.Services.Bases
         Result<List<UserModel>> GetUsers();
         Result<UserModel> GetUser(int id);
         Result<UserModel> GetUser(Expression<Func<UserModel, bool>> predicate);
+        int GetUserId(string username);
     }
 }

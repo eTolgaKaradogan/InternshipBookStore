@@ -1,0 +1,69 @@
+﻿@model List<_04_Business.Models.CartGroupByModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    @if (Model.Count > 0)
+    {
+        <a asp-action="ClearCart" class="btn btn-xs btn-danger clear-button" style="position: relative; left: 971px; top: 175px;">
+            Clear Cart
+        </a>
+
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().BookName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().TotalUnitPriceText)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().TotalCount)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalUnitPriceText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalCount)
+                    </td>
+                    <td>
+                        <a class="btn btn-xs btn-danger" asp-action="RemoveFromCart" asp-route-bookId="@item.BookId" asp-route-userId="@item.UserId"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <td>
+            <a asp-controller="Book" asp-action="Index" class="btn btn-xs btn-primary return-button" style="position: relative; top: 10px;">
+                <i class="fas fa-shopping-basket"></i> Continue ordering
+            </a>
+        </td>
+        @if (Model.Count > 0)
+        {
+            <td class="text-right">
+                <a asp-controller="Cart" asp-action="Checkout" class="btn btn-xs btn-success checkout-button" style="position: relative; left: 269px; top: 10px;">
+                    <i class="bi bi-check-circle-fill"></i> Checkout!
+                </a>
+            </td>
+        }
+    </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    @if (Model.Count < 1)
+    {
+        <h5 class="text-center">Your cart is empty!</h5>
+    }
+</div>

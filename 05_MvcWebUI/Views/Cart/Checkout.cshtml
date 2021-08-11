@@ -1,0 +1,54 @@
+﻿@model _04_Business.Models.ShippingDetailsModel
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<div class="container">
+    <h1 class="text-center">Checkout</h1>
+
+    <form asp-controller="Cart" asp-action="Checkout" method="post" class="needs-validation" novalidate="" style="position: relative;top: 70px;">
+        @if (ViewBag.Message != null)
+        {
+            <p class="bg-danger text-white">@ViewBag.Message</p>
+        }
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-3">
+                <label asp-for="ShippingDetails.FirstName" class="form-label"></label>
+                <input asp-for="ShippingDetails.FirstName" class="form-control" placeholder="First Name" type="text" />
+                <span asp-validation-for="ShippingDetails.FirstName"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="ShippingDetails.LastName" class="form-label"></label>
+                <input asp-for="ShippingDetails.LastName" class="form-control" type="text" placeholder="Last Name" />
+                <span asp-validation-for="ShippingDetails.LastName"></span>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <label asp-for="ShippingDetails.Email" class="form-label"></label>
+                <input asp-for="ShippingDetails.Email" class="form-control" placeholder="you@example.com" />
+                <span asp-validation-for="ShippingDetails.Email"></span>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <label asp-for="ShippingDetails.PhoneNumber" class="form-label"></label>
+                <input asp-for="ShippingDetails.PhoneNumber" class="form-control" type="text" placeholder="+0005055050" />
+                <span asp-validation-for="ShippingDetails.PhoneNumber"></span>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-6">
+                <label asp-for="ShippingDetails.Address" class="form-label"></label>
+                <input asp-for="ShippingDetails.Address" type="text" class="form-control" placeholder="1234 Main St" />
+                <span asp-validation-for="ShippingDetails.Address"></span>
+            </div>
+        </div>
+        <div class="form-row justify-content-center">
+            <div class="form-group">
+                <input type="submit" value="Complete Checkout" class="btn btn-success continue-checkout" style="position: relative; left: -5px;" />
+            </div>
+        </div>
+    </form>
+</div>
