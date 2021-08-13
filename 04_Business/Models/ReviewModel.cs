@@ -7,7 +7,7 @@ namespace _04_Business.Models
 {
     public class ReviewModel : RecordBase
     {
-        public string Rating { get; set; }
+        public double Rating { get; set; }
 
         public string Content { get; set; }
 

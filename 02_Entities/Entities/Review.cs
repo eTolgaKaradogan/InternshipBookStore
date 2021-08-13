@@ -10,7 +10,7 @@ namespace _02_Entities.Entities
         [StringLength(1000, ErrorMessage = "The maximum is 1000 characters.")]
         public string Content { get; set; }
 
-        public string Rating { get; set; }
+        public double Rating { get; set; } = 0.0;
 
         public string Username { get; set; }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using _01_AppCore.Business.Models.Results;
 using _02_Entities.Entities;
@@ -14,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace _05_MvcWebUI.Controllers
 {
@@ -46,6 +46,7 @@ namespace _05_MvcWebUI.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
             var model = _bookService.Query();
+
             if (User.IsInRole("User"))
             {
                 model = _bookService.Query().Where(b => b.IsEnabled);
@@ -88,7 +89,7 @@ namespace _05_MvcWebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendReview(ReviewModel review, string username, string rating, int bookId)
+        public IActionResult SendReview(ReviewModel review, string username, double rating, int bookId)
         {
             try
             {
