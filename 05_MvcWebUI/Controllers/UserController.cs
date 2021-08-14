@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using _01_AppCore.Business.Models.Results;
-using _03_DataAccess.Repositories;
 using _04_Business.Enums;
 using _04_Business.Models;
 using _04_Business.Services.Bases;
+using _05_MvcWebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -23,14 +24,11 @@ namespace _05_MvcWebUI.Controllers
             _roleService = roleService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var result = _userService.GetUsers();
-            if (result.Status == ResultStatus.Exception)
-                throw new Exception(result.Message);
-            if (result.Status == ResultStatus.Error)
-                ViewBag.Message = result.Message;
-            return View(result.Data);
+            var model = _userService.Query();
+
+            return View(await PaginatedList<UserModel>.CreateAsync(model, pageNumber, 6));
         }
 
         public IActionResult Details(int? id)
@@ -146,7 +144,7 @@ namespace _05_MvcWebUI.Controllers
                 var user = _userService.Query().SingleOrDefault(u => u.UserName == currentUserName);
                 user.FollowingUsers = followingUser.UserName;
                 _userService.Update(user);
-                Notify("You have followed {0}.", followingUser.UserName);
+                Notify($"You have followed {followingUser.UserName}.");
                 return RedirectToAction("Index", "Book");
             }
 

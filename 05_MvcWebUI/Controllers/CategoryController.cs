@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using _01_AppCore.Business.Models.Results;
 using _04_Business.Models;
 using _04_Business.Services.Bases;
+using _05_MvcWebUI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,10 +20,10 @@ namespace _05_MvcWebUI.Controllers
             _categoryService = categoryService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var model = _categoryService.Query().ToList();
-            return View(model);
+            var model = _categoryService.Query();
+            return View(await PaginatedList<CategoryModel>.CreateAsync(model, pageNumber, 6));
         }
 
         public IActionResult Create()

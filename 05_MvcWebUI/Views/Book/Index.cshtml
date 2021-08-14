@@ -126,14 +126,13 @@
                 {
                     <p class="bg-success text-white">@ViewData["ProductsMessage"]</p>
                 }
-
                 <div class="row">
+                    @{int i = 1;}
                     @foreach (var item in Model)
                     {
                         var reviews = item.Reviews;
                         var ratings = 0.0;
                         var ratingCount = 0;
-                        int i = 1;
                         foreach (var rating in reviews)
                         {
                             ratings += rating.Rating;
@@ -161,6 +160,7 @@
                             });</script>
                                             <h2 class="text-center" id="@("rating" + i)" style="position: relative; left: 27px; top:8px;"></h2><h5 style=" position: relative; left: 87px; bottom: 25px;">(@ratingCount)</h5>
                                         </h2>
+                                        i++;
                                     }
                                     @if (User.Identity.IsAuthenticated)
                                     {
@@ -173,7 +173,7 @@
                                             @:&nbsp;&nbsp;
                                             <a class="btn btn-outline-danger edit-button" asp-action="Edit" asp-route-id="@item.Id" style="position: relative; right: -25px; top: 9px;"><i class="fas fa-lg fa-pen-square"></i> Edit</a>
                                             @:&nbsp;&nbsp;
-                                            <a class="btn btn-outline-danger delete-button" href="#" onclick="deleteBook(@item.Id);" style="position: relative; bottom: -9px; left: 12px;"><i class="fas fa-lg fa-trash"></i> Delete</a>
+                                            <a class="btn btn-outline-danger delete-button" asp-action="Delete" asp-route-id="@item.Id" style="position: relative; bottom: -9px; left: 12px;"><i class="fas fa-lg fa-trash"></i> Delete</a>
                                         }
                                     }
                                 </div>
@@ -214,9 +214,6 @@
                 numStarts: 5,
                 maxValue: 5,
                 halfStar: true,
-                onChange: function (rating, rateYoInstance) {
-                    $('#rating').val(rating);
-                }
             })
         })</script>
 </body>

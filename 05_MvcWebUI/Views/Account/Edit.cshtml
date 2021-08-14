@@ -15,7 +15,7 @@
             }
             <div class="form-group">
                 <label asp-for="UserName"></label>
-                <input asp-for="UserName" class="form-control" />
+                <input asp-for="UserName" class="form-control" readonly placeholder="@Model.UserName" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">

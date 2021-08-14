@@ -49,7 +49,7 @@ namespace _05_MvcWebUI.Controllers
             cart.Add(cartItem);
             cartJson = JsonConvert.SerializeObject(cart);
             HttpContext.Session.SetString("cart", cartJson);
-            Notify("{0} is added to cart!", cartItem.BookName);
+            Notify($"{cartItem.BookName} is added to cart!");
             return RedirectToAction("Index", "Book");
         }
 
@@ -98,7 +98,7 @@ namespace _05_MvcWebUI.Controllers
                 HttpContext.Session.SetString("cart", JsonConvert.SerializeObject(cart));
             }
             if (item != null)
-                Notify("{0} is removed from cart!", item.BookName);
+                Notify($"{item.BookName} is removed from cart!");
             return RedirectToAction(nameof(Index));
         }
 
@@ -108,7 +108,8 @@ namespace _05_MvcWebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Checkout(ShippingDetails shippingDetails)
+        [ActionName("Checkout")]
+        public IActionResult CheckoutPost()
         {
             if (!ModelState.IsValid)
             {
@@ -124,7 +125,7 @@ namespace _05_MvcWebUI.Controllers
             _notificationService.Create(notification, username);
 
             HttpContext.Session.Remove("cart");
-            Notify("Thank you {0}, your order is in proccess.");
+            Notify($"Thank you {username}, your order is in proccess.");
             return RedirectToAction("Index", "Book");
         }
     }

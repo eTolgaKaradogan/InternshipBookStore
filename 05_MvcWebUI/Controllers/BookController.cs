@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 
 namespace _05_MvcWebUI.Controllers
 {
@@ -89,20 +88,18 @@ namespace _05_MvcWebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult SendReview(ReviewModel review, string username, double rating, int bookId)
+        public IActionResult SendReview(ReviewModel review, double rating, int bookId)
         {
             try
             {
-                var user = _userService.Query().FirstOrDefault(u => u.UserName == username);
+                string userName = User.Identity.Name;
+                var user = _userService.Query().FirstOrDefault(u => u.UserName == userName);
                 review.UserId = user.Id;
                 review.BookId = bookId;
                 review.Rating = rating;
                 review.UserName = User.Identity.Name;
                 _reviewService.Add(review);
-
-                string userName = username;
                 var bookname = _bookService.Query().FirstOrDefault(b => b.Id == bookId).Name;
-
                 var notification = new Notification()
                 {
                     Text = $"The {userName} is reviewed the {bookname}."
@@ -195,7 +192,7 @@ namespace _05_MvcWebUI.Controllers
                             image.CopyTo(fileStream);
                         }
                     }
-                    Notify("{0} is successfully created.", book.Name);
+                    Notify($"{book.Name} is successfully created.");
                     return RedirectToAction("AdminIndex");
                 }
                 ModelState.AddModelError("", bookResult.Message);
@@ -292,7 +289,7 @@ namespace _05_MvcWebUI.Controllers
                             image.CopyTo(fileStream);
                         }
                     }
-                    Notify("{0} is successfully edited.", book.Name);
+                    Notify($"{book.Name} is successfully edited.");
                     return RedirectToAction("Details", new { id = book.Id });
                 }
                 ModelState.AddModelError("", bookResult.Message);
@@ -324,7 +321,7 @@ namespace _05_MvcWebUI.Controllers
                 }
                 var book = _bookService.Query().SingleOrDefault(b => b.Id == id.Value);
                 _bookService.Delete(id.Value);
-                Notify("{0} is successfully deleted.", book.Name);
+                Notify($"{book.Name} is successfully deleted.");
                 return RedirectToAction("AdminIndex");
             }
             catch (Exception ex)
@@ -350,7 +347,7 @@ namespace _05_MvcWebUI.Controllers
                 if (System.IO.File.Exists(filePath))
                     System.IO.File.Delete(filePath);
             }
-            Notify("{0}'s image is successfully deleted.", existingBook.Name);
+            Notify($"{existingBook.Name}'s image is successfully deleted.");
             return RedirectToAction("Details", new { id = id });
         }
 

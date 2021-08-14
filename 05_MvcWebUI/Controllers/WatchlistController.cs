@@ -15,28 +15,24 @@ namespace _05_MvcWebUI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IWatchlistService _watchlistService;
-        private readonly WatchlistRepositoryBase _watchlistRepository;
-        private readonly UserRepositoryBase _userRepository;
 
-        public WatchlistController(IUserService userService, IWatchlistService watchlistService, UserRepositoryBase userRepository, WatchlistRepositoryBase watchlistRepository)
+        public WatchlistController(IUserService userService, IWatchlistService watchlistService)
         {
             _userService = userService;
             _watchlistService = watchlistService;
-            _userRepository = userRepository;
-            _watchlistRepository = watchlistRepository;
         }
 
-        public IActionResult Index(string currentUsername)
+        public IActionResult Index()
         {
-            var currentUser = _userService.Query().FirstOrDefault(u => u.UserName == currentUsername && u.IsBlocked == false);
+            var currentUser = _userService.Query().FirstOrDefault(u => u.UserName == User.Identity.Name && u.IsBlocked == false);
             var watchlist = _watchlistService.GetUserWatchlist(currentUser.Id);
             return View(watchlist);
         }
 
-        public IActionResult Add(string username, string currentUsername)
+        public IActionResult Add(string username)
         {
             var followedUser = _userService.Query().SingleOrDefault(u => u.UserName == username);
-            var currentUser = _userService.Query().SingleOrDefault(u => u.UserName == currentUsername);
+            var currentUser = _userService.Query().SingleOrDefault(u => u.UserName == User.Identity.Name);
             var watchlist = new WatchlistModel()
             {
                 UserId = currentUser.Id,
@@ -46,13 +42,13 @@ namespace _05_MvcWebUI.Controllers
             bool exists = _watchlistService.CheckIfAlreadyExists(followedUser.Id, currentUser.Id);
             if (exists == true)
             {
-                Notify("The user is already following.");
+                Notify($"You are already following {followedUser.UserName}.");
                 return View();
             }
             var result = _watchlistService.Add(watchlist);
             if (result.Status == ResultStatus.Success)
             {
-                Notify("{0} is added to your watchlist.", followedUser.UserName);
+                Notify($"{followedUser.UserName} is added to your watchlist.");
                 return RedirectToAction("Index", "Watchlist", new { currentUsername = currentUser.UserName });
             }
             Notify("An error occured!");
